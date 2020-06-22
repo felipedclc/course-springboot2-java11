@@ -13,7 +13,7 @@ public class UserResource {
 	
 	@GetMapping
 	public ResponseEntity<User> findAll(){ //RETORNA RESPOSTA DE REQUISIÇÕES WEB
-		User u = new User(1, "Maria do Carmo", "mc@gmail.com", "99999999", "12345");
+		User u = new User((long) 1, "Maria do Carmo", "mc@gmail.com", "99999999", "12345");
 		return ResponseEntity.ok().body(u); // CORRESPONDE AO METODO GET
 	}
 }

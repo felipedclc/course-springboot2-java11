@@ -22,4 +22,8 @@ public class UserService {
 		Optional<User> obj = repository.findById(id);
 		return obj.get(); // RETORNA O OBJETO DENTRO DO "< >"
 	}
+	
+	public User insert(User obj) { // OPERAÇÃO PARA INSERIR NO BANCO UM OBJETO DO TIPO USER  
+		return repository.save(obj);
+	}
 }

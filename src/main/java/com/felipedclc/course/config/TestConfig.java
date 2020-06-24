@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.felipedclc.course.entities.Category;
 import com.felipedclc.course.entities.Order;
 import com.felipedclc.course.entities.OrderItem;
+import com.felipedclc.course.entities.Payment;
 import com.felipedclc.course.entities.Product;
 import com.felipedclc.course.entities.User;
 import com.felipedclc.course.entities.enums.OrderStatus;
@@ -82,5 +83,10 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPayment(pay1); // ASSOCIANDO O PEDIDO 1 COM O PAGAMENTO 1
+		
+		orderRepository.save(o1);
 	}
 }

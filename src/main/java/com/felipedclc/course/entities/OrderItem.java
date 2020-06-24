@@ -63,6 +63,10 @@ public class OrderItem implements Serializable {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	
+	public Double getSubTotal() { // USAR SEMPRE A PALAVRA GET NO INICIO(JAVA EE)
+		return price * quantity;
+	}
 
 	@Override
 	public int hashCode() {

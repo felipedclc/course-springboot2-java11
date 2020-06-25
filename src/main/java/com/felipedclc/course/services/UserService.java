@@ -1,4 +1,4 @@
-package com.felipedclc.course.services;
+	package com.felipedclc.course.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.felipedclc.course.entities.User;
 import com.felipedclc.course.repositories.UserRepository;
+import com.felipedclc.course.services.exception.ResourceNotFoundException;
 
 @Service 
 public class UserService {
@@ -20,7 +21,7 @@ public class UserService {
 	}
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get(); // RETORNA O OBJETO DENTRO DO "< >"
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id)); //RETORNA O ID OU UMA EXCEPTION 
 	}
 	
 	public User insert(User obj) { // OPERAÇÃO PARA INSERIR NO BANCO UM OBJETO DO TIPO USER  

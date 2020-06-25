@@ -3,6 +3,8 @@
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,7 +16,7 @@ import com.felipedclc.course.services.exception.DatabaseException;
 import com.felipedclc.course.services.exception.ResourceNotFoundException;
 
 @Service 
-public class UserService {
+public class UserService { 
 
 	@Autowired // INJEÇÃO DE DEPENDÊNCIA AUTOMÁTICA
 	private UserRepository repository;
@@ -31,7 +33,7 @@ public class UserService {
 		return repository.save(obj);
 	}
 	
-	public void delete(Long id) {
+	public void delete(Long id) { // USAR O RuntimeException PARA DESCOBRIR O ERRO
 		try {
 			repository.deleteById(id);
 		} catch(EmptyResultDataAccessException e) {
@@ -42,9 +44,13 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
-		User entity = repository.getOne(id); // GET ONE PREPARA O OBJETO SEM IR NO BANCO DE DADOS
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			User entity = repository.getOne(id); // GET ONE PREPARA O OBJETO SEM IR NO BANCO DE DADOS	
+			updateData(entity, obj);
+		 	return repository.save(entity);
+		} catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 	private void updateData(User entity, User obj) {
 		entity.setName(obj.getName()); // ATUALIZANDO O NOME DO ENTITY
